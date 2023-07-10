@@ -19,8 +19,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        musicChecked = Array(repeating: false, count: music.count)
-        difficultyChecked = Array(repeating: false, count: difficulty.count)
+        if SettingsManager.management.musicChecked == [] {
+            musicChecked = Array(repeating: false, count: music.count)
+        } else {
+            musicChecked = SettingsManager.management.musicChecked
+        }
+        if SettingsManager.management.difficultyChecked == [] {
+            difficultyChecked = Array(repeating: false, count: difficulty.count)
+        } else {
+            difficultyChecked = SettingsManager.management.difficultyChecked
+        }
         navigationItem.title = "Настройки"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
@@ -85,6 +93,7 @@ extension SettingsViewController: UITableViewDataSource {
             }
             tableView.deselectRow(at: indexPath, animated: false)
             musicChecked[indexPath.row] = !musicChecked[indexPath.row]
+            SettingsManager.management.musicChecked = self.musicChecked
             for i in tableView.indexPathsForVisibleRows! {
                 if i.section == 0 {
                     tableView.reloadRows(at: [i], with: .automatic)
@@ -97,6 +106,7 @@ extension SettingsViewController: UITableViewDataSource {
             }
             tableView.deselectRow(at: indexPath, animated: false)
             difficultyChecked[indexPath.row] = !difficultyChecked[indexPath.row]
+            SettingsManager.management.difficultyChecked = self.difficultyChecked
             for i in tableView.indexPathsForVisibleRows! {
                 if i.section == 1 {
                     tableView.reloadRows(at: [i], with: .automatic)

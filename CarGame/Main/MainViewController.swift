@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import AVFAudio
 
 class MainViewController: UIViewController {
 
@@ -22,8 +23,43 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        let v = UIImageView()
+        view.addSubview(v)
+        v.image = UIImage(named: "toretto")
+        v.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        var blur = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blur)
+        blurEffectView.frame = v.bounds
+        blurEffectView.alpha = 0.5
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.sendSubviewToBack(v)
+        v.addSubview(blurEffectView)
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        guard let path = Bundle.main.path(forResource: "main", ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        do {
+            SettingsManager.management.player = try AVAudioPlayer(contentsOf: url)
+        } catch { }
+        if SettingsManager.management.player?.isPlaying == false {
+            SettingsManager.management.player?.play()
+        }
+        
+//        if let score = SettingsManager.management.score {
+//            let alert = UIAlertController(title: "Вы разбились", message: "Вы разбились со счетом: \(score)", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+//            NSLog("The \"OK\" alert occured.")
+//            }))
+//            self.present(alert, animated: true, completion: nil)
+//            SettingsManager.management.score = 0
+//        }
+    }
+    
     private func setupUI() {
         addElementsToView()
         setupProfileButton()
@@ -33,7 +69,6 @@ class MainViewController: UIViewController {
     }
     
     private func addElementsToView() {
-        view.backgroundColor = .systemBackground
         view.addSubview(profileButton)
         view.addSubview(settingsButton)
         view.addSubview(startButton)
@@ -41,23 +76,22 @@ class MainViewController: UIViewController {
     }
     
     private func setupProfileButton() {
-        profileButton.backgroundColor = .systemBackground
-        profileButton.tintColor = .black
+        profileButton.tintColor = .white
         profileButton.setBackgroundImage(UIImage(systemName: "person"), for: .normal)
         profileButton.addTarget(self, action: #selector(openProfile), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: profileButton)
         profileButton.snp.makeConstraints { make in
-            make.top.left.equalTo(view.safeAreaLayoutGuide).inset(8)
             make.height.width.equalTo(50)
         }
+        
     }
     
     private func setupSettingButton() {
-        settingsButton.backgroundColor = .systemBackground
-        settingsButton.tintColor = .black
+        settingsButton.tintColor = .white
         settingsButton.setBackgroundImage(UIImage(systemName: "gearshape"), for: .normal)
         settingsButton.addTarget(self, action: #selector(openSettings), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingsButton)
         settingsButton.snp.makeConstraints { make in
-            make.top.right.equalTo(view.safeAreaLayoutGuide).inset(8)
             make.height.width.equalTo(50)
         }
     }
@@ -71,20 +105,20 @@ class MainViewController: UIViewController {
         startButton.addTarget(self, action: #selector(startGame), for: .touchUpInside)
         startButton.snp.makeConstraints { make in
             make.centerX.equalTo(view.safeAreaLayoutGuide)
-            make.centerY.equalTo(view.safeAreaLayoutGuide)
+            make.centerY.equalTo(view.safeAreaLayoutGuide).offset(160)
             make.height.equalTo(60)
             make.width.equalTo(180)
         }
     }
     
     private func setupStatisticsButton() {
-        statisticsButton.tintColor = .black
-        statisticsButton.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+        statisticsButton.tintColor = .white
+        statisticsButton.titleLabel?.font = UIFont.systemFont(ofSize: 35)
         statisticsButton.setTitle("Статистика", for: .normal)
         statisticsButton.addTarget(self, action: #selector(openStatistics), for: .touchUpInside)
         statisticsButton.snp.makeConstraints { make in
-            make.top.equalTo(startButton.snp.bottom).offset(16)
-            make.left.right.equalTo(startButton)
+            make.top.equalTo(startButton.snp.bottom).offset(32)
+            make.left.equalTo(startButton)
         }
     }
     
@@ -99,18 +133,17 @@ class MainViewController: UIViewController {
     }
     
     @objc private func openSettings() {
+        SettingsManager.management.player?.stop()
         navigationController?.pushViewController(SettingsViewController(), animated: true)
     }
     
     @objc private func startGame() {
-        let alert = UIAlertController(title: "Старт гонки", message: "Тут скоро будет начало игры в гонки", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-        NSLog("The \"OK\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
+        SettingsManager.management.player?.stop()
+        navigationController?.pushViewController(GameViewController(), animated: true)
     }
     
     @objc private func openStatistics() {
+        SettingsManager.management.player?.stop()
         navigationController?.pushViewController(StatisticsViewController(), animated: true)
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E022857F2A63E1CC00AAD657 /* audi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E022857E2A63E1CC00AAD657 /* audi.mp3 */; };
+		E02285812A63E4C600AAD657 /* main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E02285802A63E4C600AAD657 /* main.mp3 */; };
 		E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039861C2A5C6926007A98B1 /* SettingsManager.swift */; };
 		E0783BA92A59553C002E3520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BA82A59553C002E3520 /* AppDelegate.swift */; };
 		E0783BAB2A59553C002E3520 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAA2A59553C002E3520 /* SceneDelegate.swift */; };
@@ -18,9 +20,13 @@
 		E0783BC62A5976A0002E3520 /* StatisticsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BC52A5976A0002E3520 /* StatisticsCell.swift */; };
 		E0783BC92A59A5CC002E3520 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BC82A59A5CC002E3520 /* SettingsViewController.swift */; };
 		E0783BCB2A59B473002E3520 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BCA2A59B473002E3520 /* SwitchCell.swift */; };
+		E094F11A2A62CE65005D860E /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E094F1192A62CE65005D860E /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E022857E2A63E1CC00AAD657 /* audi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audi.mp3; sourceTree = "<group>"; };
+		E02285802A63E4C600AAD657 /* main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main.mp3; sourceTree = "<group>"; };
+		E02285832A63F64900AAD657 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		E039861C2A5C6926007A98B1 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E0783BA52A59553C002E3520 /* CarGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0783BA82A59553C002E3520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +39,7 @@
 		E0783BC52A5976A0002E3520 /* StatisticsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsCell.swift; sourceTree = "<group>"; };
 		E0783BC82A59A5CC002E3520 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E0783BCA2A59B473002E3520 /* SwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		E094F1192A62CE65005D860E /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E02285822A63E4C900AAD657 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				E022857E2A63E1CC00AAD657 /* audi.mp3 */,
+				E02285802A63E4C600AAD657 /* main.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		E0783B9C2A59553C002E3520 = {
 			isa = PBXGroup;
 			children = (
@@ -66,8 +82,10 @@
 		E0783BA72A59553C002E3520 /* CarGame */ = {
 			isa = PBXGroup;
 			children = (
+				E02285822A63E4C900AAD657 /* Music */,
 				E0783BBF2A5955AC002E3520 /* App */,
 				E0783BC02A5955B5002E3520 /* Main */,
+				E094F1172A62CE21005D860E /* Services */,
 				E0783BC12A5955BB002E3520 /* Res */,
 			);
 			path = CarGame;
@@ -85,6 +103,7 @@
 		E0783BC02A5955B5002E3520 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				E094F1182A62CE43005D860E /* Game */,
 				E0783BC72A59A5AE002E3520 /* Settings */,
 				E0783BC22A59695E002E3520 /* Statistics */,
 				E0783BAC2A59553C002E3520 /* MainViewController.swift */,
@@ -116,9 +135,24 @@
 			children = (
 				E0783BC82A59A5CC002E3520 /* SettingsViewController.swift */,
 				E0783BCA2A59B473002E3520 /* SwitchCell.swift */,
-				E039861C2A5C6926007A98B1 /* SettingsManager.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		E094F1172A62CE21005D860E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E039861C2A5C6926007A98B1 /* SettingsManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E094F1182A62CE43005D860E /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				E094F1192A62CE65005D860E /* GameViewController.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,11 +195,12 @@
 			};
 			buildConfigurationList = E0783BA02A59553C002E3520 /* Build configuration list for PBXProject "CarGame" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = E0783B9C2A59553C002E3520;
 			packageReferences = (
@@ -187,6 +222,8 @@
 			files = (
 				E0783BB52A59553D002E3520 /* LaunchScreen.storyboard in Resources */,
 				E0783BB22A59553D002E3520 /* Assets.xcassets in Resources */,
+				E022857F2A63E1CC00AAD657 /* audi.mp3 in Resources */,
+				E02285812A63E4C600AAD657 /* main.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +238,7 @@
 				E0783BA92A59553C002E3520 /* AppDelegate.swift in Sources */,
 				E0783BAB2A59553C002E3520 /* SceneDelegate.swift in Sources */,
 				E0783BCB2A59B473002E3520 /* SwitchCell.swift in Sources */,
+				E094F11A2A62CE65005D860E /* GameViewController.swift in Sources */,
 				E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */,
 				E0783BC62A5976A0002E3520 /* StatisticsCell.swift in Sources */,
 				E0783BC42A59697B002E3520 /* StatisticsViewController.swift in Sources */,
@@ -215,6 +253,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E0783BB42A59553D002E3520 /* Base */,
+				E02285832A63F64900AAD657 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -226,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -286,6 +326,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

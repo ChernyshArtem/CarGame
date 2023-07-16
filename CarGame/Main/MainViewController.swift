@@ -17,12 +17,14 @@ class MainViewController: UIViewController {
     private let settingsButton = UIButton(type: .system)
     private let startButton = UIButton(type: .system)
     private let statisticsButton = UIButton(type: .system)
+    private let name = UILabel()
     
     //MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
         let v = UIImageView()
         view.addSubview(v)
         v.image = UIImage(named: "toretto")
@@ -66,6 +68,17 @@ class MainViewController: UIViewController {
         setupSettingButton()
         setupStartButton()
         setupStatisticsButton()
+        
+        name.text = "Тачки: Побег из Жигулёвска"
+        name.font = UIFont.systemFont(ofSize: 45, weight: .heavy)
+        name.textColor = .white
+        name.numberOfLines = 0
+        name.textAlignment = .center
+        name.snp.makeConstraints { make in
+            make.left.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.right.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(32)
+        }
     }
     
     private func addElementsToView() {
@@ -73,6 +86,7 @@ class MainViewController: UIViewController {
         view.addSubview(settingsButton)
         view.addSubview(startButton)
         view.addSubview(statisticsButton)
+        view.addSubview(name)
     }
     
     private func setupProfileButton() {

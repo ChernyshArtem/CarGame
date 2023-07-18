@@ -18,10 +18,6 @@ class GameViewController: UIViewController {
         case right
     }
     
-    var score = 0
-    var timer = Timer()
-    let randomInt = Int(arc4random_uniform(UInt32(1 - 0 + 1)))
-    
     private var carImage: UIImageView = {
         let car = UIImageView()
         car.image = UIImage(named: "car")
@@ -58,15 +54,11 @@ class GameViewController: UIViewController {
         return view
     }()
     
-    private let leftButton = UIButton(type: .system)
-    
     private let centerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray
         return view
     }()
-    
-    private let centerButton = UIButton(type: .system)
     
     private let rightView: UIView = {
         let view = UIView()
@@ -74,7 +66,28 @@ class GameViewController: UIViewController {
         return view
     }()
     
-    private let rightButton = UIButton(type: .system)
+    private lazy var leftSwipe: UISwipeGestureRecognizer = {
+        let gesture = UISwipeGestureRecognizer()
+        gesture.direction = .left
+        gesture.addTarget(self, action: #selector(selectCarPosition))
+        return gesture
+    }()
+    
+    private lazy var rightSwipe: UISwipeGestureRecognizer = {
+        let gesture = UISwipeGestureRecognizer()
+        gesture.direction = .right
+        gesture.addTarget(self, action: #selector(selectCarPosition))
+        return gesture
+    }()
+    
+    //MARK: VARIABLES
+    private let baseCarMovement: Double = 0.75
+    private let baseWidthHeight: Double = 100
+    private let personWidth: Double = 50
+    private let baseMargin: Double = 16
+    var score = 0
+    var timer = Timer()
+    let randomInt = Int(arc4random_uniform(UInt32(1 - 0 + 1)))
     
     //MARK: LIFECYCLE
     override func viewDidLoad() {
@@ -101,13 +114,13 @@ class GameViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        fallElement(element: rockImage, position: centerView, speed: 5, width: 100)
+        fallElement(element: rockImage, position: centerView, speed: 5, width: baseWidthHeight)
         if randomInt == 0 {
-            fallElement(element: treeImage, position: leftView, speed: 4, width: 100)
-            fallElement(element: personImage, position: rightView, speed: 7, width: 50)
+            fallElement(element: treeImage, position: leftView, speed: 4, width: baseWidthHeight)
+            fallElement(element: personImage, position: rightView, speed: 7, width: personWidth)
         } else {
-            fallElement(element: treeImage, position: rightView, speed: 4, width: 100)
-            fallElement(element: personImage, position: leftView, speed: 7, width: 50)
+            fallElement(element: treeImage, position: rightView, speed: 4, width: baseWidthHeight)
+            fallElement(element: personImage, position: leftView, speed: 7, width: personWidth)
         }
     }
     
@@ -119,39 +132,39 @@ class GameViewController: UIViewController {
         setupRightView()
         
         carImage.snp.makeConstraints { make in
-            make.centerX.bottom.equalTo(centerView).inset(16)
-            make.height.width.equalTo(100)
+            make.centerX.bottom.equalTo(centerView).inset(baseMargin)
+            make.height.width.equalTo(baseWidthHeight)
         }
         
         rockImage.snp.makeConstraints { make in
             make.top.equalTo(centerView).offset(-120)
             make.centerX.equalTo(centerView)
-            make.height.width.equalTo(100)
+            make.height.width.equalTo(baseWidthHeight)
         }
         
         if randomInt == 0 {
             treeImage.snp.makeConstraints { make in
                 make.top.equalTo(leftView)
                 make.centerX.equalTo(leftView)
-                make.height.width.equalTo(100)
+                make.height.width.equalTo(baseWidthHeight)
             }
             personImage.snp.makeConstraints { make in
                 make.top.equalTo(rightView)
                 make.centerX.equalTo(rightView)
-                make.height.equalTo(100)
-                make.width.equalTo(50)
+                make.height.equalTo(baseWidthHeight)
+                make.width.equalTo(personWidth)
             }
         } else {
             treeImage.snp.makeConstraints { make in
                 make.top.equalTo(rightView)
                 make.centerX.equalTo(rightView)
-                make.height.width.equalTo(100)
+                make.height.width.equalTo(baseWidthHeight)
             }
             personImage.snp.makeConstraints { make in
                 make.top.equalTo(leftView)
                 make.centerX.equalTo(leftView)
-                make.height.equalTo(100)
-                make.width.equalTo(50)
+                make.height.equalTo(baseWidthHeight)
+                make.width.equalTo(personWidth)
             }
         }
     }
@@ -160,7 +173,6 @@ class GameViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         view.backgroundColor = .systemBackground
-        
         view.addSubview(leftView)
         view.addSubview(centerView)
         view.addSubview(rightView)
@@ -168,13 +180,8 @@ class GameViewController: UIViewController {
         view.addSubview(rockImage)
         view.addSubview(treeImage)
         view.addSubview(personImage)
-        
-        leftView.addSubview(leftButton)
-        leftButton.tag = 0
-        centerView.addSubview(centerButton)
-        centerButton.tag = 1
-        rightView.addSubview(rightButton)
-        rightButton.tag = 2
+        view.addGestureRecognizer(leftSwipe)
+        view.addGestureRecognizer(rightSwipe)
     }
     
     private func setupLeftView() {
@@ -183,10 +190,6 @@ class GameViewController: UIViewController {
             make.height.equalTo(view)
             make.top.left.equalTo(view)
         }
-        leftButton.snp.makeConstraints { make in
-            make.edges.equalTo(leftView)
-        }
-        leftButton.addTarget(self, action: #selector(selectCarPosition), for: .touchUpInside)
     }
     
     private func setupCenterView() {
@@ -195,12 +198,6 @@ class GameViewController: UIViewController {
             make.height.equalTo(view)
             make.centerX.centerY.equalTo(view)
         }
-        centerButton.snp.makeConstraints { make in
-            make.left.right.equalTo(centerView)
-            make.top.equalTo(centerView.snp.top).multipliedBy(2)
-            make.bottom.equalTo(centerView.snp.bottom).multipliedBy(2)
-        }
-        centerButton.addTarget(self, action: #selector(selectCarPosition), for: .touchUpInside)
         
         let leftLine = UIView()
         let rightLine = UIView()
@@ -231,21 +228,26 @@ class GameViewController: UIViewController {
             make.height.equalTo(view)
             make.top.right.equalTo(view)
         }
-        rightButton.snp.makeConstraints { make in
-            make.edges.equalTo(rightView)
-        }
-        rightButton.addTarget(self, action: #selector(selectCarPosition), for: .touchUpInside)
     }
     
     //MARK: FUNCTIONALITY
-    @objc private func selectCarPosition(sender: UIButton) {
-        switch sender.tag {
-        case 0:
-            selectedUserPostion = .left
-        case 1:
-            selectedUserPostion = .center
+    @objc private func selectCarPosition(sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case .left:
+            if selectedUserPostion == .right {
+                selectedUserPostion = .center
+            } else {
+                selectedUserPostion = .left
+            }
+        case .right:
+            if selectedUserPostion == .center {
+                selectedUserPostion = .right
+            } else {
+                selectedUserPostion = .center
+            }
+
         default:
-            selectedUserPostion = .right
+            break
         }
         changeCarPosition()
     }
@@ -254,26 +256,26 @@ class GameViewController: UIViewController {
         timerCheck()
         switch selectedUserPostion {
         case .left:
-            UIView.animate(withDuration: 0.75) {
+            UIView.animate(withDuration: baseCarMovement) {
                 self.carImage.snp.remakeConstraints { make in
-                    make.centerX.bottom.equalTo(self.leftView).inset(16)
-                    make.height.width.equalTo(100)
+                    make.centerX.bottom.equalTo(self.leftView).inset(self.baseMargin)
+                    make.height.width.equalTo(self.baseWidthHeight)
                 }
                 self.view.layoutIfNeeded()
             }
         case .center:
-            UIView.animate(withDuration: 0.75) {
+            UIView.animate(withDuration: baseCarMovement) {
                 self.carImage.snp.remakeConstraints { make in
-                    make.centerX.bottom.equalTo(self.centerView).inset(16)
-                    make.height.width.equalTo(100)
+                    make.centerX.bottom.equalTo(self.centerView).inset(self.baseMargin)
+                    make.height.width.equalTo(self.baseWidthHeight)
                 }
                 self.view.layoutIfNeeded()
             }
         case .right:
-            UIView.animate(withDuration: 0.75) {
+            UIView.animate(withDuration: baseCarMovement) {
                 self.carImage.snp.remakeConstraints { make in
-                    make.centerX.bottom.equalTo(self.rightView).inset(16)
-                    make.height.width.equalTo(100)
+                    make.centerX.bottom.equalTo(self.rightView).inset(self.baseMargin)
+                    make.height.width.equalTo(self.baseWidthHeight)
                 }
                 self.view.layoutIfNeeded()
             }
@@ -284,8 +286,8 @@ class GameViewController: UIViewController {
         UIView.animate(withDuration: speed, delay: 0, options:[.repeat]) {
             element.snp.remakeConstraints { make in
                 make.centerX.equalTo(position)
-                make.bottom.equalTo(position).offset(56)
-                make.height.equalTo(100)
+                make.bottom.equalTo(position).offset(100)
+                make.height.equalTo(self.baseWidthHeight)
                 make.width.equalTo(width)
             }
             self.view.layoutIfNeeded()
@@ -308,7 +310,12 @@ class GameViewController: UIViewController {
     private func checkCrashOfCar(element: UIImageView) -> Bool {
         if element.layer.presentation()!.frame.maxY >= carImage.layer.presentation()!.frame.minY-25 && Int(element.layer.presentation()!.frame.midX) == Int(carImage.layer.presentation()!.frame.midX)  {
             timer = Timer()
-            return false
+            if carImage.layer.presentation()!.frame.maxY < element.layer.presentation()!.frame.minY {
+                score+=1
+                return true
+            } else {
+                return false
+            }
         } else {
             score+=1
             return true

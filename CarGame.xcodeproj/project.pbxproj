@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		E022857F2A63E1CC00AAD657 /* audi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E022857E2A63E1CC00AAD657 /* audi.mp3 */; };
 		E02285812A63E4C600AAD657 /* main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E02285802A63E4C600AAD657 /* main.mp3 */; };
+		E024C9832A67167100899B2A /* FINAL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C97F2A67167100899B2A /* FINAL.mp3 */; };
+		E024C9842A67167100899B2A /* Hotline.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9802A67167100899B2A /* Hotline.mp3 */; };
+		E024C9852A67167100899B2A /* NFS.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9812A67167100899B2A /* NFS.mp3 */; };
+		E024C9862A67167100899B2A /* Jmurki.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9822A67167100899B2A /* Jmurki.mp3 */; };
 		E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039861C2A5C6926007A98B1 /* SettingsManager.swift */; };
 		E0783BA92A59553C002E3520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BA82A59553C002E3520 /* AppDelegate.swift */; };
 		E0783BAB2A59553C002E3520 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAA2A59553C002E3520 /* SceneDelegate.swift */; };
@@ -27,6 +31,10 @@
 		E022857E2A63E1CC00AAD657 /* audi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audi.mp3; sourceTree = "<group>"; };
 		E02285802A63E4C600AAD657 /* main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main.mp3; sourceTree = "<group>"; };
 		E02285832A63F64900AAD657 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E024C97F2A67167100899B2A /* FINAL.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FINAL.mp3; sourceTree = "<group>"; };
+		E024C9802A67167100899B2A /* Hotline.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Hotline.mp3; sourceTree = "<group>"; };
+		E024C9812A67167100899B2A /* NFS.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NFS.mp3; sourceTree = "<group>"; };
+		E024C9822A67167100899B2A /* Jmurki.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Jmurki.mp3; sourceTree = "<group>"; };
 		E039861C2A5C6926007A98B1 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E0783BA52A59553C002E3520 /* CarGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0783BA82A59553C002E3520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +65,10 @@
 		E02285822A63E4C900AAD657 /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				E024C97F2A67167100899B2A /* FINAL.mp3 */,
+				E024C9802A67167100899B2A /* Hotline.mp3 */,
+				E024C9822A67167100899B2A /* Jmurki.mp3 */,
+				E024C9812A67167100899B2A /* NFS.mp3 */,
 				E022857E2A63E1CC00AAD657 /* audi.mp3 */,
 				E02285802A63E4C600AAD657 /* main.mp3 */,
 			);
@@ -222,6 +234,10 @@
 			files = (
 				E0783BB52A59553D002E3520 /* LaunchScreen.storyboard in Resources */,
 				E0783BB22A59553D002E3520 /* Assets.xcassets in Resources */,
+				E024C9862A67167100899B2A /* Jmurki.mp3 in Resources */,
+				E024C9842A67167100899B2A /* Hotline.mp3 in Resources */,
+				E024C9832A67167100899B2A /* FINAL.mp3 in Resources */,
+				E024C9852A67167100899B2A /* NFS.mp3 in Resources */,
 				E022857F2A63E1CC00AAD657 /* audi.mp3 in Resources */,
 				E02285812A63E4C600AAD657 /* main.mp3 in Resources */,
 			);

@@ -11,9 +11,12 @@ import AVFoundation
 class SettingsManager {
     public static var management = SettingsManager.init()
     
-    public var musicChecked: [Bool] = []
-    public var difficultyChecked: [Bool] = []
+    public var musicChecked: [Bool]? = Array(repeating: false, count: 5)
+    public var difficultyChecked: [Bool]? = Array(repeating: false, count: 3)
     var player: AVAudioPlayer?
     var score: Int?
-    private init() { }
+    private init() {
+        musicChecked?[0] = true
+        difficultyChecked?[1] = true
+    }
 }

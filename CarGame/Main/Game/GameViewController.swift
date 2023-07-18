@@ -85,6 +85,39 @@ class GameViewController: UIViewController {
     private let baseWidthHeight: Double = 100
     private let personWidth: Double = 50
     private let baseMargin: Double = 16
+    private var rockSpeed: Double = {
+        var rock = Double()
+        if SettingsManager.management.difficultyChecked?[0] == true {
+            rock = 6
+        } else if SettingsManager.management.difficultyChecked?[2] == true {
+            rock = 2
+        } else {
+            rock = 4
+        }
+        return rock
+    }()
+    private var treeSpeed: Double = {
+        var tree = Double()
+        if SettingsManager.management.difficultyChecked?[0] == true {
+            tree = 7.5
+        } else if SettingsManager.management.difficultyChecked?[2] == true {
+            tree = 2.5
+        } else {
+            tree = 5
+        }
+        return tree
+    }()
+    private var personSpeed: Double = {
+        var person = Double()
+        if SettingsManager.management.difficultyChecked?[0] == true {
+            person = 9
+        } else if SettingsManager.management.difficultyChecked?[2] == true {
+            person = 5
+        } else {
+            person = 7
+        }
+        return person
+    }()
     var score = 0
     var timer = Timer()
     let randomInt = Int(arc4random_uniform(UInt32(1 - 0 + 1)))
@@ -99,28 +132,18 @@ class GameViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let path = Bundle.main.path(forResource: "audi", ofType: "mp3") else {
-            return
-        }
-        let url = URL(fileURLWithPath: path)
-        do {
-            SettingsManager.management.player = try AVAudioPlayer(contentsOf: url)
-        }
-        catch {
-            
-        }
-        SettingsManager.management.player?.play()
+        playMusic()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        fallElement(element: rockImage, position: centerView, speed: 5, width: baseWidthHeight)
+        fallElement(element: rockImage, position: centerView, speed: rockSpeed, width: baseWidthHeight)
         if randomInt == 0 {
-            fallElement(element: treeImage, position: leftView, speed: 4, width: baseWidthHeight)
-            fallElement(element: personImage, position: rightView, speed: 7, width: personWidth)
+            fallElement(element: treeImage, position: leftView, speed: treeSpeed, width: baseWidthHeight)
+            fallElement(element: personImage, position: rightView, speed: personSpeed, width: personWidth)
         } else {
-            fallElement(element: treeImage, position: rightView, speed: 4, width: baseWidthHeight)
-            fallElement(element: personImage, position: leftView, speed: 7, width: personWidth)
+            fallElement(element: treeImage, position: rightView, speed: treeSpeed, width: baseWidthHeight)
+            fallElement(element: personImage, position: leftView, speed: personSpeed, width: personWidth )
         }
     }
     
@@ -322,5 +345,30 @@ class GameViewController: UIViewController {
         }
     }
     
-    
+    private func playMusic() {
+        var music: String = "audi"
+        
+        if SettingsManager.management.musicChecked?[1] == true {
+            music = "NFS"
+        } else if SettingsManager.management.musicChecked?[2] == true {
+            music = "Jmurki"
+        } else if SettingsManager.management.musicChecked?[3] == true {
+            music = "Hotline"
+        } else if SettingsManager.management.musicChecked?[4] == true {
+            music = "FINAL"
+        } else {
+            music = "audi"
+        }
+        guard let path = Bundle.main.path(forResource: music, ofType: "mp3") else {
+            return
+        }
+        let url = URL(fileURLWithPath: path)
+        do {
+            SettingsManager.management.player = try AVAudioPlayer(contentsOf: url)
+        }
+        catch {
+            
+        }
+        SettingsManager.management.player?.play()
+    }
 }

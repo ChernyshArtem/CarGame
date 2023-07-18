@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate {
     
-    private let music: [String] = ["Классическая","Need for Speed","Гоночная","Боевая","Финальная"]
+    private let music: [String] = ["Классическая","Need for Speed","Жмурки","Боевая","Финальная"]
     private let difficulty: [String] = ["Легко","Средне","Сложно"]
     
     private var musicChecked: [Bool]!
@@ -21,11 +21,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
         if SettingsManager.management.musicChecked == [] {
             musicChecked = Array(repeating: false, count: music.count)
+            musicChecked[0] = true
         } else {
             musicChecked = SettingsManager.management.musicChecked
         }
         if SettingsManager.management.difficultyChecked == [] {
             difficultyChecked = Array(repeating: false, count: difficulty.count)
+            difficultyChecked[1] = true
         } else {
             difficultyChecked = SettingsManager.management.difficultyChecked
         }

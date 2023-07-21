@@ -12,7 +12,9 @@ class StatisticsViewController: UIViewController {
 
     private let tableView = UITableView()
     
-    private let statistics: [(String,Int)] = [("Кики", 45000), ("Максим", 39977), ("Сэм", 38951), ("Тимон", 37898), ("Луи", 34873), ("Бэйли", 31842), ("Рокки", 29817), ("Лола", 29774), ("Грейп", 29704), ("Харли", 28682), ("Кики", 25661), ("Джесси", 23598), ("Бобо", 22569), ("Зои", 20556), ("Оливия", 19508), ("Нико", 19487), ("Лео", 17409), ("Мила", 16382), ("Кэти", 9287), ("Бенджи", 9209)]
+    private let statistics: [(String,Int)] = {
+        return StatisticsManager.management.listOfWinners
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()

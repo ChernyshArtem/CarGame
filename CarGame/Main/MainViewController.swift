@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     private let statisticsButton = UIButton(type: .system)
     private let name = UILabel()
     
+    public var messageToUser: String? = nil
     //MARK: Lifecycle
     
     override func viewDidLoad() {
@@ -51,15 +52,13 @@ class MainViewController: UIViewController {
         if SettingsManager.management.player?.isPlaying == false {
             SettingsManager.management.player?.play()
         }
-        
-//        if let score = SettingsManager.management.score {
-//            let alert = UIAlertController(title: "Вы разбились", message: "Вы разбились со счетом: \(score)", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-//            NSLog("The \"OK\" alert occured.")
-//            }))
-//            self.present(alert, animated: true, completion: nil)
-//            SettingsManager.management.score = 0
-//        }
+        if messageToUser != nil {
+            let alert = UIAlertController(title: "Ба-бах!!!", message: "\(messageToUser ?? "Error")", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                self.messageToUser = nil
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     private func setupUI() {
@@ -153,7 +152,9 @@ class MainViewController: UIViewController {
     
     @objc private func startGame() {
         SettingsManager.management.player?.stop()
-        navigationController?.pushViewController(GameViewController(), animated: true)
+        let vc = GameViewController()
+        vc.mainController = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func openStatistics() {

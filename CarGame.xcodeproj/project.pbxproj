@@ -14,6 +14,7 @@
 		E024C9852A67167100899B2A /* NFS.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9812A67167100899B2A /* NFS.mp3 */; };
 		E024C9862A67167100899B2A /* Jmurki.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9822A67167100899B2A /* Jmurki.mp3 */; };
 		E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039861C2A5C6926007A98B1 /* SettingsManager.swift */; };
+		E0508F582A6AF847005D6BEB /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0508F572A6AF847005D6BEB /* StatisticsManager.swift */; };
 		E0783BA92A59553C002E3520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BA82A59553C002E3520 /* AppDelegate.swift */; };
 		E0783BAB2A59553C002E3520 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAA2A59553C002E3520 /* SceneDelegate.swift */; };
 		E0783BAD2A59553C002E3520 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAC2A59553C002E3520 /* MainViewController.swift */; };
@@ -36,6 +37,7 @@
 		E024C9812A67167100899B2A /* NFS.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NFS.mp3; sourceTree = "<group>"; };
 		E024C9822A67167100899B2A /* Jmurki.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Jmurki.mp3; sourceTree = "<group>"; };
 		E039861C2A5C6926007A98B1 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		E0508F572A6AF847005D6BEB /* StatisticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsManager.swift; sourceTree = "<group>"; };
 		E0783BA52A59553C002E3520 /* CarGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0783BA82A59553C002E3520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0783BAA2A59553C002E3520 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				E039861C2A5C6926007A98B1 /* SettingsManager.swift */,
+				E0508F572A6AF847005D6BEB /* StatisticsManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				E0783BCB2A59B473002E3520 /* SwitchCell.swift in Sources */,
 				E094F11A2A62CE65005D860E /* GameViewController.swift in Sources */,
 				E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */,
+				E0508F582A6AF847005D6BEB /* StatisticsManager.swift in Sources */,
 				E0783BC62A5976A0002E3520 /* StatisticsCell.swift in Sources */,
 				E0783BC42A59697B002E3520 /* StatisticsViewController.swift in Sources */,
 				E0783BC92A59A5CC002E3520 /* SettingsViewController.swift in Sources */,

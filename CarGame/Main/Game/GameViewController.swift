@@ -66,6 +66,14 @@ class GameViewController: UIViewController {
         return view
     }()
     
+    private let startTextLabel: UILabel = {
+        let label = UILabel()
+        label.text = "3"
+        label.font = UIFont.systemFont(ofSize: 200, weight: .semibold)
+        label.textAlignment = .center
+        return label
+    }()
+    
     private lazy var leftSwipe: UISwipeGestureRecognizer = {
         let gesture = UISwipeGestureRecognizer()
         gesture.direction = .left
@@ -80,8 +88,12 @@ class GameViewController: UIViewController {
         return gesture
     }()
     
+    //MARK: Parent-controller
+    
+    public var mainController: MainViewController?
+    
     //MARK: VARIABLES
-    private let baseCarMovement: Double = 0.75
+    private let baseCarMovement: Double = 0.25
     private let baseWidthHeight: Double = 100
     private let personWidth: Double = 50
     private let baseMargin: Double = 16
@@ -96,6 +108,7 @@ class GameViewController: UIViewController {
         }
         return rock
     }()
+    
     private var treeSpeed: Double = {
         var tree = Double()
         if SettingsManager.management.difficultyChecked?[0] == true {
@@ -107,6 +120,7 @@ class GameViewController: UIViewController {
         }
         return tree
     }()
+    
     private var personSpeed: Double = {
         var person = Double()
         if SettingsManager.management.difficultyChecked?[0] == true {
@@ -118,9 +132,11 @@ class GameViewController: UIViewController {
         }
         return person
     }()
-    var score = 0
-    var timer = Timer()
-    let randomInt = Int(arc4random_uniform(UInt32(1 - 0 + 1)))
+    
+    private var score = 0
+    private var timer = Timer()
+    private let randomInt = Int(arc4random_uniform(UInt32(1 - 0 + 1)))
+    private var startTextLabelTimer: Timer? = Timer()
     
     //MARK: LIFECYCLE
     override func viewDidLoad() {
@@ -129,9 +145,14 @@ class GameViewController: UIViewController {
         timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { _ in
             self.timerCheck()
         })
+        startTextLabelTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.startTextAction()
+        })
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         playMusic()
     }
     
@@ -153,42 +174,10 @@ class GameViewController: UIViewController {
         setupLeftView()
         setupCenterView()
         setupRightView()
-        
-        carImage.snp.makeConstraints { make in
-            make.centerX.bottom.equalTo(centerView).inset(baseMargin)
-            make.height.width.equalTo(baseWidthHeight)
-        }
-        
-        rockImage.snp.makeConstraints { make in
-            make.top.equalTo(centerView).offset(-120)
-            make.centerX.equalTo(centerView)
-            make.height.width.equalTo(baseWidthHeight)
-        }
-        
-        if randomInt == 0 {
-            treeImage.snp.makeConstraints { make in
-                make.top.equalTo(leftView)
-                make.centerX.equalTo(leftView)
-                make.height.width.equalTo(baseWidthHeight)
-            }
-            personImage.snp.makeConstraints { make in
-                make.top.equalTo(rightView)
-                make.centerX.equalTo(rightView)
-                make.height.equalTo(baseWidthHeight)
-                make.width.equalTo(personWidth)
-            }
-        } else {
-            treeImage.snp.makeConstraints { make in
-                make.top.equalTo(rightView)
-                make.centerX.equalTo(rightView)
-                make.height.width.equalTo(baseWidthHeight)
-            }
-            personImage.snp.makeConstraints { make in
-                make.top.equalTo(leftView)
-                make.centerX.equalTo(leftView)
-                make.height.equalTo(baseWidthHeight)
-                make.width.equalTo(personWidth)
-            }
+        setupImages()
+       
+        startTextLabel.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -203,6 +192,7 @@ class GameViewController: UIViewController {
         view.addSubview(rockImage)
         view.addSubview(treeImage)
         view.addSubview(personImage)
+        view.addSubview(startTextLabel)
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
     }
@@ -253,6 +243,45 @@ class GameViewController: UIViewController {
         }
     }
     
+    private func setupImages() {
+        carImage.snp.makeConstraints { make in
+            make.centerX.bottom.equalTo(centerView).inset(baseMargin)
+            make.height.width.equalTo(baseWidthHeight)
+        }
+        
+        rockImage.snp.makeConstraints { make in
+            make.top.equalTo(centerView).offset(-120)
+            make.centerX.equalTo(centerView)
+            make.height.width.equalTo(baseWidthHeight)
+        }
+        
+        if randomInt == 0 {
+            treeImage.snp.makeConstraints { make in
+                make.top.equalTo(leftView)
+                make.centerX.equalTo(leftView)
+                make.height.width.equalTo(baseWidthHeight)
+            }
+            personImage.snp.makeConstraints { make in
+                make.top.equalTo(rightView)
+                make.centerX.equalTo(rightView)
+                make.height.equalTo(baseWidthHeight)
+                make.width.equalTo(personWidth)
+            }
+        } else {
+            treeImage.snp.makeConstraints { make in
+                make.top.equalTo(rightView)
+                make.centerX.equalTo(rightView)
+                make.height.width.equalTo(baseWidthHeight)
+            }
+            personImage.snp.makeConstraints { make in
+                make.top.equalTo(leftView)
+                make.centerX.equalTo(leftView)
+                make.height.equalTo(baseWidthHeight)
+                make.width.equalTo(personWidth)
+            }
+        }
+    }
+    
     //MARK: FUNCTIONALITY
     @objc private func selectCarPosition(sender: UISwipeGestureRecognizer) {
         switch sender.direction {
@@ -279,7 +308,7 @@ class GameViewController: UIViewController {
         timerCheck()
         switch selectedUserPostion {
         case .left:
-            UIView.animate(withDuration: baseCarMovement) {
+            UIView.animate(withDuration: baseCarMovement, delay: 0, options: [.curveEaseInOut]) {
                 self.carImage.snp.remakeConstraints { make in
                     make.centerX.bottom.equalTo(self.leftView).inset(self.baseMargin)
                     make.height.width.equalTo(self.baseWidthHeight)
@@ -287,7 +316,7 @@ class GameViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         case .center:
-            UIView.animate(withDuration: baseCarMovement) {
+            UIView.animate(withDuration: baseCarMovement, delay: 0, options: [.curveEaseInOut]) {
                 self.carImage.snp.remakeConstraints { make in
                     make.centerX.bottom.equalTo(self.centerView).inset(self.baseMargin)
                     make.height.width.equalTo(self.baseWidthHeight)
@@ -295,7 +324,7 @@ class GameViewController: UIViewController {
                 self.view.layoutIfNeeded()
             }
         case .right:
-            UIView.animate(withDuration: baseCarMovement) {
+            UIView.animate(withDuration: baseCarMovement, delay: 0, options: [.curveEaseInOut]) {
                 self.carImage.snp.remakeConstraints { make in
                     make.centerX.bottom.equalTo(self.rightView).inset(self.baseMargin)
                     make.height.width.equalTo(self.baseWidthHeight)
@@ -306,7 +335,7 @@ class GameViewController: UIViewController {
     }
     
     private func fallElement(element: UIImageView, position: UIView, speed: Double, width: Double) {
-        UIView.animate(withDuration: speed, delay: 0, options:[.repeat]) {
+        UIView.animate(withDuration: speed, delay: 3, options:[.repeat, .curveLinear]) {
             element.snp.remakeConstraints { make in
                 make.centerX.equalTo(position)
                 make.bottom.equalTo(position).offset(100)
@@ -319,14 +348,14 @@ class GameViewController: UIViewController {
     
     private func timerCheck() {
         if checkCrashOfCar(element: rockImage) == false {
+            mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
-            SettingsManager.management.score = score
         } else if checkCrashOfCar(element: treeImage) == false {
+            mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
-            SettingsManager.management.score = score
         } else if checkCrashOfCar(element: personImage) == false {
+            mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
-            SettingsManager.management.score = score
         }
     }
     
@@ -370,5 +399,23 @@ class GameViewController: UIViewController {
             
         }
         SettingsManager.management.player?.play()
+    }
+    
+    private func startTextAction() {
+        switch startTextLabel.text {
+        case "3":
+            startTextLabel.text = "2"
+            break
+        case "2":
+            startTextLabel.text = "1"
+            break
+        case "1":
+            startTextLabel.text = "0"
+            break
+        default:
+            startTextLabelTimer?.invalidate()
+            startTextLabelTimer = nil
+            startTextLabel.isHidden = true
+        }
     }
 }

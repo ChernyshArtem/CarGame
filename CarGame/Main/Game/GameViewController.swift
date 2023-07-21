@@ -142,7 +142,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
             self.timerCheck()
         })
         startTextLabelTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
@@ -348,12 +348,15 @@ class GameViewController: UIViewController {
     
     private func timerCheck() {
         if checkCrashOfCar(element: rockImage) == false {
+            timer.invalidate()
             mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
         } else if checkCrashOfCar(element: treeImage) == false {
+            timer.invalidate()
             mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
         } else if checkCrashOfCar(element: personImage) == false {
+            timer.invalidate()
             mainController?.messageToUser =  StatisticsManager.management.addWinnerToList(score: score)
             self.navigationController?.popViewController(animated: true)
         }
@@ -361,7 +364,6 @@ class GameViewController: UIViewController {
     
     private func checkCrashOfCar(element: UIImageView) -> Bool {
         if element.layer.presentation()!.frame.maxY >= carImage.layer.presentation()!.frame.minY-25 && Int(element.layer.presentation()!.frame.midX) == Int(carImage.layer.presentation()!.frame.midX)  {
-            timer = Timer()
             if carImage.layer.presentation()!.frame.maxY < element.layer.presentation()!.frame.minY {
                 score+=1
                 return true

@@ -35,6 +35,8 @@ class StatisticsCell: UITableViewCell {
         return img
     }()
     
+    private let baseWidth: Double = 16
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -56,22 +58,22 @@ class StatisticsCell: UITableViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         
         position.snp.makeConstraints { make in
-            make.top.bottom.equalTo(contentView).inset(16)
-            make.left.equalTo(contentView).offset(16)
+            make.top.bottom.equalTo(contentView).inset(baseWidth)
+            make.left.equalTo(contentView).offset(baseWidth)
         }
         
         name.snp.makeConstraints { make in
-            make.top.bottom.equalTo(contentView).inset(16)
-            make.left.equalTo(position.snp.right).offset(16)
+            make.top.bottom.equalTo(contentView).inset(baseWidth)
+            make.left.equalTo(position.snp.right).offset(baseWidth)
         }
         
         score.snp.makeConstraints { make in
-            make.top.bottom.equalTo(contentView).inset(16)
-            make.left.equalTo(name.snp.right).offset(16)
+            make.top.bottom.equalTo(contentView).inset(baseWidth)
+            make.left.equalTo(name.snp.right).offset(baseWidth)
         }
         
         image.snp.makeConstraints { make in
-            make.top.bottom.right.equalTo(contentView).inset(8)
+            make.top.bottom.right.equalTo(contentView).inset(baseWidth/2)
             make.height.width.equalTo(150)
         }
     }

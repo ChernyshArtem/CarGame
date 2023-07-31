@@ -59,6 +59,7 @@ class MainViewController: UIViewController {
             }))
             self.present(alert, animated: true, completion: nil)
         }
+    
     }
     
     private func setupUI() {
@@ -67,6 +68,7 @@ class MainViewController: UIViewController {
         setupSettingButton()
         setupStartButton()
         setupStatisticsButton()
+        setupDefaultObserver()
         
         name.text = "Тачки: Побег из Жигулёвска"
         name.font = UIFont.systemFont(ofSize: 45, weight: .heavy)
@@ -135,14 +137,16 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func setupDefaultObserver () {
+        NotificationCenter.default.addObserver(self, selector: #selector(openObserver(_:)), name: Notification.Name("User"), object: nil)
+  
+    }
+    
     //MARK: FUNC
     
     @objc private func openProfile() {
-        let alert = UIAlertController(title: "Открытие профиля", message: "Тут скоро будет открытие профиля", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-        NSLog("The \"OK\" alert occured.")
-        }))
-        self.present(alert, animated: true, completion: nil)
+        SettingsManager.management.player?.stop()
+        navigationController?.pushViewController(ProfileViewController(), animated: true)
     }
     
     @objc private func openSettings() {
@@ -160,6 +164,10 @@ class MainViewController: UIViewController {
     @objc private func openStatistics() {
         SettingsManager.management.player?.stop()
         navigationController?.pushViewController(StatisticsViewController(), animated: true)
+    }
+    
+    @objc private func openObserver(_ notification: Notification) {
+        print(notification.userInfo?["userName"] as? String ?? "Error")
     }
 }
 

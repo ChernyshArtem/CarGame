@@ -15,6 +15,7 @@
 		E024C9862A67167100899B2A /* Jmurki.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C9822A67167100899B2A /* Jmurki.mp3 */; };
 		E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039861C2A5C6926007A98B1 /* SettingsManager.swift */; };
 		E0508F582A6AF847005D6BEB /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0508F572A6AF847005D6BEB /* StatisticsManager.swift */; };
+		E058DE6D2A76A5B500AF85CF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E058DE6C2A76A5B500AF85CF /* ProfileViewController.swift */; };
 		E0783BA92A59553C002E3520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BA82A59553C002E3520 /* AppDelegate.swift */; };
 		E0783BAB2A59553C002E3520 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAA2A59553C002E3520 /* SceneDelegate.swift */; };
 		E0783BAD2A59553C002E3520 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0783BAC2A59553C002E3520 /* MainViewController.swift */; };
@@ -38,6 +39,7 @@
 		E024C9822A67167100899B2A /* Jmurki.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Jmurki.mp3; sourceTree = "<group>"; };
 		E039861C2A5C6926007A98B1 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		E0508F572A6AF847005D6BEB /* StatisticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsManager.swift; sourceTree = "<group>"; };
+		E058DE6C2A76A5B500AF85CF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E0783BA52A59553C002E3520 /* CarGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0783BA82A59553C002E3520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0783BAA2A59553C002E3520 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,14 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		E058DE6B2A76A57200AF85CF /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E058DE6C2A76A5B500AF85CF /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		E0783B9C2A59553C002E3520 = {
 			isa = PBXGroup;
 			children = (
@@ -96,7 +106,6 @@
 		E0783BA72A59553C002E3520 /* CarGame */ = {
 			isa = PBXGroup;
 			children = (
-				E02285822A63E4C900AAD657 /* Music */,
 				E0783BBF2A5955AC002E3520 /* App */,
 				E0783BC02A5955B5002E3520 /* Main */,
 				E094F1172A62CE21005D860E /* Services */,
@@ -120,6 +129,7 @@
 				E094F1182A62CE43005D860E /* Game */,
 				E0783BC72A59A5AE002E3520 /* Settings */,
 				E0783BC22A59695E002E3520 /* Statistics */,
+				E058DE6B2A76A57200AF85CF /* Profile */,
 				E0783BAC2A59553C002E3520 /* MainViewController.swift */,
 			);
 			path = Main;
@@ -128,6 +138,7 @@
 		E0783BC12A5955BB002E3520 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				E02285822A63E4C900AAD657 /* Music */,
 				E0783BB12A59553D002E3520 /* Assets.xcassets */,
 				E0783BB32A59553D002E3520 /* LaunchScreen.storyboard */,
 				E0783BB62A59553D002E3520 /* Info.plist */,
@@ -259,6 +270,7 @@
 				E0783BCB2A59B473002E3520 /* SwitchCell.swift in Sources */,
 				E094F11A2A62CE65005D860E /* GameViewController.swift in Sources */,
 				E039861D2A5C6926007A98B1 /* SettingsManager.swift in Sources */,
+				E058DE6D2A76A5B500AF85CF /* ProfileViewController.swift in Sources */,
 				E0508F582A6AF847005D6BEB /* StatisticsManager.swift in Sources */,
 				E0783BC62A5976A0002E3520 /* StatisticsCell.swift in Sources */,
 				E0783BC42A59697B002E3520 /* StatisticsViewController.swift in Sources */,

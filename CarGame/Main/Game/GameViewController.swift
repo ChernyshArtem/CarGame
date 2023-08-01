@@ -88,6 +88,20 @@ class GameViewController: UIViewController {
         return gesture
     }()
     
+    private let scoreView: UIView = {
+        let scoreView = UIView()
+        scoreView.backgroundColor = .systemGray
+        return scoreView
+    }()
+    
+    private let scoreLabel: UILabel = {
+        let scoreLabel = UILabel()
+        scoreLabel.text = "SCORE: 0"
+        scoreLabel.textColor = .white
+        scoreLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        return scoreLabel
+    }()
+    
     //MARK: Parent-controller
     
     public var mainController: MainViewController?
@@ -142,9 +156,6 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
-            self.timerCheck()
-        })
         startTextLabelTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.startTextAction()
         })
@@ -175,7 +186,8 @@ class GameViewController: UIViewController {
         setupCenterView()
         setupRightView()
         setupImages()
-       
+        setupScoreView()
+        
         startTextLabel.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -185,6 +197,7 @@ class GameViewController: UIViewController {
         navigationItem.hidesBackButton = true
         
         view.backgroundColor = .systemBackground
+        
         view.addSubview(leftView)
         view.addSubview(centerView)
         view.addSubview(rightView)
@@ -193,6 +206,7 @@ class GameViewController: UIViewController {
         view.addSubview(treeImage)
         view.addSubview(personImage)
         view.addSubview(startTextLabel)
+        view.addSubview(scoreView)
         view.addGestureRecognizer(leftSwipe)
         view.addGestureRecognizer(rightSwipe)
     }
@@ -200,16 +214,17 @@ class GameViewController: UIViewController {
     private func setupLeftView() {
         leftView.snp.makeConstraints { make in
             make.width.equalTo(view.safeAreaLayoutGuide).dividedBy(3)
-            make.height.equalTo(view)
-            make.top.left.equalTo(view)
+            make.top.left.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
         }
     }
     
     private func setupCenterView() {
         centerView.snp.makeConstraints { make in
             make.width.equalTo(view.safeAreaLayoutGuide).dividedBy(3)
-            make.height.equalTo(view)
-            make.centerX.centerY.equalTo(view)
+            make.bottom.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         
         let leftLine = UIView()
@@ -220,16 +235,16 @@ class GameViewController: UIViewController {
         
         leftLine.snp.makeConstraints { make in
             make.left.equalTo(centerView.snp.left)
-            make.top.equalTo(centerView.snp.top)
-            make.height.equalTo(centerView)
+            make.bottom.equalTo(centerView.snp.bottom)
+            make.height.equalTo(centerView).multipliedBy(0.99)
             make.width.equalTo(2)
         }
         leftLine.backgroundColor = .systemYellow
         
         rightLine.snp.makeConstraints { make in
             make.right.equalTo(centerView.snp.right)
-            make.top.equalTo(centerView.snp.top)
-            make.height.equalTo(centerView)
+            make.bottom.equalTo(centerView.snp.bottom)
+            make.height.equalTo(centerView).multipliedBy(0.99)
             make.width.equalTo(2)
         }
         rightLine.backgroundColor = .systemYellow
@@ -238,8 +253,8 @@ class GameViewController: UIViewController {
     private func setupRightView() {
         rightView.snp.makeConstraints { make in
             make.width.equalTo(view.safeAreaLayoutGuide).dividedBy(3)
-            make.height.equalTo(view)
-            make.top.right.equalTo(view)
+            make.bottom.equalToSuperview()
+            make.top.right.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -250,7 +265,7 @@ class GameViewController: UIViewController {
         }
         
         rockImage.snp.makeConstraints { make in
-            make.top.equalTo(centerView).offset(-120)
+            make.top.equalTo(centerView)
             make.centerX.equalTo(centerView)
             make.height.width.equalTo(baseWidthHeight)
         }
@@ -280,6 +295,30 @@ class GameViewController: UIViewController {
                 make.width.equalTo(personWidth)
             }
         }
+    }
+    
+    private func setupScoreView() {
+        scoreView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.bottom.equalTo(centerView.snp.top)
+        }
+        let scoreViewHeight = navigationController?.navigationBar.frame.height ?? 0
+        let scoreViewWidth = view.frame.width / 3
+        let customView = UIView()
+        scoreView.addSubview(customView)
+        customView.snp.makeConstraints { make in
+            make.height.equalTo(scoreViewHeight)
+            make.width.equalTo((scoreViewWidth * 2) - 8)
+            make.right.equalToSuperview().inset(8)
+            make.bottom.equalTo(centerView.snp.top).inset(-2)
+        }
+        customView.addSubview(scoreLabel)
+        scoreLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalTo(customView)
+        }
+        customView.layer.cornerRadius = 15
+        customView.backgroundColor = .orange
+        
     }
     
     //MARK: FUNCTIONALITY
@@ -335,7 +374,7 @@ class GameViewController: UIViewController {
     }
     
     private func fallElement(element: UIImageView, position: UIView, speed: Double, width: Double) {
-        UIView.animate(withDuration: speed, delay: 3, options:[.repeat, .curveLinear]) {
+        UIView.animate(withDuration: speed, delay: 3.0, options:[.repeat, .curveLinear]) {
             element.snp.remakeConstraints { make in
                 make.centerX.equalTo(position)
                 make.bottom.equalTo(position).offset(100)
@@ -366,12 +405,14 @@ class GameViewController: UIViewController {
         if element.layer.presentation()!.frame.maxY >= carImage.layer.presentation()!.frame.minY-25 && Int(element.layer.presentation()!.frame.midX) == Int(carImage.layer.presentation()!.frame.midX)  {
             if carImage.layer.presentation()!.frame.maxY < element.layer.presentation()!.frame.minY {
                 score+=1
+                scoreLabel.text = "\(score)"
                 return true
             } else {
                 return false
             }
         } else {
             score+=1
+            scoreLabel.text = "\(score)"
             return true
         }
     }
@@ -418,6 +459,9 @@ class GameViewController: UIViewController {
             startTextLabelTimer?.invalidate()
             startTextLabelTimer = nil
             startTextLabel.isHidden = true
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { _ in
+                self.timerCheck()
+            })
         }
     }
 }

@@ -17,6 +17,19 @@ class MainViewController: UIViewController {
     private let settingsButton = UIButton(type: .system)
     private let startButton = UIButton(type: .system)
     private let statisticsButton = UIButton(type: .system)
+    
+    private let backgroundImageView: UIImageView = {
+        let v = UIImageView()
+        v.image = UIImage(named: "toretto")
+        var blur = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blur)
+        blurEffectView.frame = v.bounds
+        blurEffectView.alpha = 0.5
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        v.addSubview(blurEffectView)
+        return v
+    }()
+    
     private let name = UILabel()
     
     public var messageToUser: String? = nil
@@ -25,20 +38,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        let v = UIImageView()
-        view.addSubview(v)
-        v.image = UIImage(named: "toretto")
-        v.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        var blur = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blur)
-        blurEffectView.frame = v.bounds
-        blurEffectView.alpha = 0.5
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.sendSubviewToBack(v)
-        v.addSubview(blurEffectView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,12 +62,13 @@ class MainViewController: UIViewController {
     }
     
     private func setupUI() {
+        
         addElementsToView()
         setupProfileButton()
         setupSettingButton()
         setupStartButton()
         setupStatisticsButton()
-        setupDefaultObserver()
+        setupBackgroundImageView()
         
         name.text = "Тачки: Побег из Жигулёвска"
         name.font = UIFont.systemFont(ofSize: 45, weight: .heavy)
@@ -88,6 +88,8 @@ class MainViewController: UIViewController {
         view.addSubview(startButton)
         view.addSubview(statisticsButton)
         view.addSubview(name)
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)
     }
     
     private func setupProfileButton() {
@@ -137,9 +139,10 @@ class MainViewController: UIViewController {
         }
     }
     
-    private func setupDefaultObserver () {
-        NotificationCenter.default.addObserver(self, selector: #selector(openObserver(_:)), name: Notification.Name("User"), object: nil)
-  
+    private func setupBackgroundImageView() {
+        backgroundImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     //MARK: FUNC

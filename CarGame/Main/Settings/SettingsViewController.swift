@@ -19,18 +19,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if SettingsManager.management.musicChecked == [] {
-            musicChecked = Array(repeating: false, count: music.count)
-            musicChecked[0] = true
-        } else {
-            musicChecked = SettingsManager.management.musicChecked
-        }
-        if SettingsManager.management.difficultyChecked == [] {
-            difficultyChecked = Array(repeating: false, count: difficulty.count)
-            difficultyChecked[1] = true
-        } else {
-            difficultyChecked = SettingsManager.management.difficultyChecked
-        }
+        musicChecked = SettingsManager.management.musicChecked
+        difficultyChecked = SettingsManager.management.difficultyChecked
         navigationItem.title = "Настройки"
         view.backgroundColor = .systemBackground
         view.addSubview(tableView)
@@ -96,6 +86,7 @@ extension SettingsViewController: UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: false)
             musicChecked[indexPath.row] = !musicChecked[indexPath.row]
             SettingsManager.management.musicChecked = self.musicChecked
+            UserDefaults.standard.set(self.musicChecked, forKey: "musicChecked")
             for i in tableView.indexPathsForVisibleRows! {
                 if i.section == 0 {
                     tableView.reloadRows(at: [i], with: .automatic)
@@ -109,6 +100,7 @@ extension SettingsViewController: UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: false)
             difficultyChecked[indexPath.row] = !difficultyChecked[indexPath.row]
             SettingsManager.management.difficultyChecked = self.difficultyChecked
+            UserDefaults.standard.set(self.difficultyChecked, forKey: "difficultyChecked")
             for i in tableView.indexPathsForVisibleRows! {
                 if i.section == 1 {
                     tableView.reloadRows(at: [i], with: .automatic)

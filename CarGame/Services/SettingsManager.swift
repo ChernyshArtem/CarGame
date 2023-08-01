@@ -15,7 +15,7 @@ class SettingsManager {
     public var difficultyChecked: [Bool]? = Array(repeating: false, count: 3)
     var player: AVAudioPlayer?
     private init() {
-        musicChecked?[0] = true
-        difficultyChecked?[1] = true
+        musicChecked = (UserDefaults.standard.array(forKey: "musicChecked") ?? []) as? [Bool]
+        difficultyChecked = (UserDefaults.standard.array(forKey: "difficultyChecked") ?? []) as? [Bool]
     }
 }

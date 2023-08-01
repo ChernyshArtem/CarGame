@@ -13,7 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        if UserDefaults.standard.string(forKey: "userName") == nil {
+            UserDefaults.standard.set("User", forKey: "userName")
+        }
+        if UserDefaults.standard.array(forKey: "musicChecked") == nil {
+            var musicChecked = Array(repeating: false, count: 5)
+            musicChecked[0] = true
+            UserDefaults.standard.set(musicChecked, forKey: "musicChecked")
+        }
+        if UserDefaults.standard.array(forKey: "difficultyChecked") == nil {
+            var difficultyChecked = Array(repeating: false, count: 3)
+            difficultyChecked[1] = true
+            UserDefaults.standard.set(difficultyChecked, forKey: "difficultyChecked")
+        }
         return true
     }
 

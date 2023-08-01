@@ -10,17 +10,15 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
         
+    private let keyUserName = "userName"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = "User"
-        setupObservers()
+        navigationItem.title = UserDefaults.standard.string(forKey: keyUserName)
         setupUI()
     }
     
-    private func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setUserName(_:)), name:    Notification.Name(rawValue: "setUserName") , object: nil)
-    }
     private func setupUI() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Изменить", style: .plain, target: self, action: #selector(changeUserName))
     }
@@ -31,19 +29,15 @@ class ProfileViewController: UIViewController {
             
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setUserName"), object: nil, userInfo: ["userName" : "\(alert.textFields?.first?.text ?? "User")"])
+            let newUserName = alert.textFields?.first?.text ?? "User"
+            UserDefaults.standard.set(newUserName, forKey: self.keyUserName)
+            self.navigationItem.title = newUserName
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "setUserName"), object: nil, userInfo: ["userName" : newUserName])
         }))
         alert.addTextField { textfield in
-            textfield.placeholder = "Новое имя"
+            textfield.placeholder = "Новое имя для \(UserDefaults.standard.string(forKey: self.keyUserName) ?? "User")"
         }
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func setUserName(_ notification: Notification) {
-        navigationItem.title = notification.userInfo?["userName"] as? String
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 }

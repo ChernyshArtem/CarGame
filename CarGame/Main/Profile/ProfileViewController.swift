@@ -15,7 +15,15 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationItem.title = UserDefaults.standard.string(forKey: keyUserName)
+        do {
+            let userString = try NSAttributedString(
+                markdown:"**\(UserDefaults.standard.string(forKey: keyUserName) as! String)**")
+            let label = UILabel()
+            label.attributedText = userString
+            navigationItem.titleView = label
+        } catch {
+            print("Couldn't parse: \(error)")
+        }
         setupUI()
     }
     

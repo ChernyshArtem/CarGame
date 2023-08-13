@@ -15,15 +15,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        do {
-            let userString = try NSAttributedString(
-                markdown:"**\(UserDefaults.standard.string(forKey: keyUserName) as! String)**")
-            let label = UILabel()
-            label.attributedText = userString
-            navigationItem.titleView = label
-        } catch {
-            print("Couldn't parse: \(error)")
-        }
+        fillUserName()
         setupUI()
     }
     
@@ -39,13 +31,27 @@ class ProfileViewController: UIViewController {
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
             let newUserName = alert.textFields?.first?.text ?? "User"
             UserDefaults.standard.set(newUserName, forKey: self.keyUserName)
-            self.navigationItem.title = newUserName
+            self.fillUserName()
             NotificationCenter.default.post(name: Notification.Name(rawValue: "setUserName"), object: nil, userInfo: ["userName" : newUserName])
         }))
         alert.addTextField { textfield in
             textfield.placeholder = "Новое имя для \(UserDefaults.standard.string(forKey: self.keyUserName) ?? "User")"
         }
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func fillUserName() {
+        do {
+            let userDefaultName = UserDefaults.standard.string(forKey: keyUserName)
+            let userString = try NSAttributedString(
+                markdown:"**\(userDefaultName ?? "User")**")
+            let label = UILabel()
+            label.attributedText = userString
+            label.font = UIFont(name: "BrahmsGotischCyrRegular", size: 30)
+            navigationItem.titleView = label
+        } catch {
+            print("Couldn't parse: \(error)")
+        }
     }
     
 }

@@ -70,7 +70,7 @@ class MainViewController: UIViewController {
         setupStatisticsButton()
         setupBackgroundImageView()
         
-        name.text = "Тачки 2"
+        name.text = "Базированная база"
         name.font = UIFont.systemFont(ofSize: 45, weight: .heavy)
         name.textColor = .white
         name.numberOfLines = 0

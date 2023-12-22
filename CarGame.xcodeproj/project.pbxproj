@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E013E1AE2A88FA2600433823 /* BrahmsGotischCyr.otf in Resources */ = {isa = PBXBuildFile; fileRef = E013E1AD2A88FA2600433823 /* BrahmsGotischCyr.otf */; };
 		E022857F2A63E1CC00AAD657 /* audi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E022857E2A63E1CC00AAD657 /* audi.mp3 */; };
 		E02285812A63E4C600AAD657 /* main.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E02285802A63E4C600AAD657 /* main.mp3 */; };
 		E024C9832A67167100899B2A /* FINAL.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E024C97F2A67167100899B2A /* FINAL.mp3 */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E013E1AD2A88FA2600433823 /* BrahmsGotischCyr.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrahmsGotischCyr.otf; sourceTree = "<group>"; };
 		E022857E2A63E1CC00AAD657 /* audi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = audi.mp3; sourceTree = "<group>"; };
 		E02285802A63E4C600AAD657 /* main.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = main.mp3; sourceTree = "<group>"; };
 		E02285832A63F64900AAD657 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -66,6 +68,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E013E1AC2A88FA1200433823 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				E013E1AD2A88FA2600433823 /* BrahmsGotischCyr.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		E02285822A63E4C900AAD657 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +148,7 @@
 		E0783BC12A5955BB002E3520 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				E013E1AC2A88FA1200433823 /* Font */,
 				E02285822A63E4C900AAD657 /* Music */,
 				E0783BB12A59553D002E3520 /* Assets.xcassets */,
 				E0783BB32A59553D002E3520 /* LaunchScreen.storyboard */,
@@ -248,6 +259,7 @@
 			files = (
 				E0783BB52A59553D002E3520 /* LaunchScreen.storyboard in Resources */,
 				E0783BB22A59553D002E3520 /* Assets.xcassets in Resources */,
+				E013E1AE2A88FA2600433823 /* BrahmsGotischCyr.otf in Resources */,
 				E024C9862A67167100899B2A /* Jmurki.mp3 in Resources */,
 				E024C9842A67167100899B2A /* Hotline.mp3 in Resources */,
 				E024C9832A67167100899B2A /* FINAL.mp3 in Resources */,
